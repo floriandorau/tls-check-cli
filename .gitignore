@@ -1,0 +1,12 @@
+.env
+.cache
+.DS_Store
+.vscode
+*.log
+
+lib/
+package-lock.json
+
+node_modules/
+output/
+log/

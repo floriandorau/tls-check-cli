@@ -1,0 +1,44 @@
+#!/usr/bin/env node
+const cli = require('../src/cli');
+
+require('yargs/yargs')(process.argv.slice(2))
+
+    .command('test <url>', 'Run tls check at target <url> [options]',
+        (yargs) => {
+            yargs
+                .usage('Usage: $0 test <url> --severity [string] --format [string]')
+                .positional('url', {
+                    describe: 'URL to check tls configuration',
+                    type: 'string',
+                })
+                .option('severity', {
+                    describe: 'Define severity level for test',
+                    choices: ['low', 'medium', 'high', 'critical'],
+                    default: 'high'
+                })
+                .option('format', {
+                    describe: 'Format of report output',
+                    choices: ['html', 'json', 'csv', 'log'],
+                    default: 'html'
+                })
+                .option('file', {
+                    describe: 'Name of the report file',
+                });
+        }, (argv) => {
+            cli.test(argv.url, { severity: argv.severity, format: argv.format, file: argv.file });
+        }
+    )
+    .command('install', 'Install latest testssl lib',
+        () => { },
+        () => cli.install()
+    )
+    .command('check', 'Check tlscheck prerequisites',
+        () => { },
+        () => cli.check()
+    )
+    .version()
+    .wrap(200)
+    .help('help')
+    .example('$0 test https://google.com', 'Runs a tlscheck against https://google.com')
+    .argv;
+
