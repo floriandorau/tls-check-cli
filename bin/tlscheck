@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const { argv, boolean } = require('yargs');
+const { argv } = require('yargs');
 const cli = require('../src/cli');
 
 require('yargs/yargs')(process.argv.slice(2))

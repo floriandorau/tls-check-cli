@@ -33,7 +33,7 @@ const _checkEndpoint = function (endpointUrl, { severity, jsonPath, htmlPath, lo
 exports.checkEndpoint = function (url, { severity, format }) {
     logger.info(`Running ssl endpoint check for '${url}'`);
 
-    if (url.startsWith('http://') || !url.startsWith('http://')) {
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
         url = `https://${url}`;
     }
 
