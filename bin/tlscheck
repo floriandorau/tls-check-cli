@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const { argv, boolean } = require('yargs');
 const cli = require('../src/cli');
 
 require('yargs/yargs')(process.argv.slice(2))
@@ -25,17 +26,30 @@ require('yargs/yargs')(process.argv.slice(2))
                     describe: 'Name of the report file',
                 });
         }, (argv) => {
-            cli.test(argv.url, { severity: argv.severity, format: argv.format, file: argv.file });
+            cli.test(argv.url, {
+                severity: argv.severity,
+                format: argv.format,
+                file: argv.file,
+                verbose: argv.verbose
+            });
         }
     )
     .command('install', 'Install latest testssl lib',
         () => { },
-        () => cli.install()
+        () => cli.install({
+            verbose: argv.verbose
+        })
     )
     .command('check', 'Check tlscheck prerequisites',
         () => { },
-        () => cli.check()
+        () => cli.check({
+            verbose: argv.verbose
+        })
     )
+    .option('verbose', {
+        describe: 'Print debug messages',
+        type: 'boolean'
+    })
     .version()
     .wrap(200)
     .help('help')

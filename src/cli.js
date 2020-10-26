@@ -8,16 +8,20 @@ const { checkEndpoint } = require('./testssl');
 
 const TESTSSL_FILE_PATH = resolve(__dirname, '..', 'lib', 'testssl');
 
-const test = (url, options) => {
+const test = (url, { severity, format, file, verbose }) => {
+    logger.init({ debug: verbose });
+
     try {
         logger.info(`Start testing ${url}`);
-        checkEndpoint(url, options);
+        checkEndpoint(url, { severity, format, file });
     } catch (err) {
         logger.error(`error while checking endpoint ${url}`, err);
     }
 };
 
-const check = () => {
+const check = ({ verbose = false }) => {
+    logger.init({ debug: verbose });
+
     if (existsSync(TESTSSL_FILE_PATH)) {
         logger.info('testssl.sh exists. You can start using cli');
     } else {
@@ -25,7 +29,9 @@ const check = () => {
     }
 };
 
-const install = () => {
+const install = ({ verbose = false }) => {
+    logger.init({ debug: verbose });
+
     try {
         logger.info('Cloning latest version of testssl.sh');
         exec('git', ['clone', 'https://github.com/drwetter/testssl.sh.git', TESTSSL_FILE_PATH]);

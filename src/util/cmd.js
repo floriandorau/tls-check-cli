@@ -13,8 +13,8 @@ exports.exec = (cmd, args) => {
             reject(err);
         });
 
-        process.on('exit', (code, signal) => {
-            logger.debug(`Process exited with code ${code} and signal ${signal}`);
+        process.on('exit', code => {
+            logger.debug(`Process exited with code ${code}`);
             resolve();
         });
     });

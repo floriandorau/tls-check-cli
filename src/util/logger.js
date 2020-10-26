@@ -1,3 +1,9 @@
+let debugEnabled = false;
+
+exports.init = function ({ debug = false }) {
+    debugEnabled = debug;
+};
+
 exports.info = function (message) {
     console.log(message);
 };
@@ -10,5 +16,7 @@ exports.error = function (message, err) {
 };
 
 exports.debug = function (message) {
-    console.log(message);
+    if (debugEnabled) {
+        console.log(message);
+    }
 };

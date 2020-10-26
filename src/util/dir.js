@@ -1,36 +1,12 @@
-const fs = require('fs');
-const { join } = require('path');
-
 const logger = require('./logger');
 
+const { join } = require('path');
+const { existsSync, mkdirSync } = require('fs');
+
 const ifNotExists = function (path, callback) {
-    if (!fs.existsSync(path)) {
+    if (!existsSync(path)) {
         callback();
     }
-};
-
-const create = (path) => fs.mkdirSync(path);
-
-const readFileSync = function (filePath) {
-    return fs.readFileSync(filePath, { encoding: 'utf8' });
-};
-
-const getFilesInDir = function (dirpath, options = { recursive: false }) {
-    const dirents = fs.readdirSync(dirpath, { withFileTypes: true });
-
-    let files = [];
-    dirents.forEach(dirent => {
-        if (dirent.isDirectory() && options.recursive) {
-            const filesSubDir = getFilesInDir(join(dirpath, dirent.name));
-            files = [...files, ...filesSubDir];
-        }
-
-        if (dirent.isFile()) {
-            files.push(join(dirpath, dirent.name));
-        }
-    });
-
-    return files;
 };
 
 const createIfNotExist = function (...pathParts) {
@@ -41,8 +17,8 @@ const createIfNotExist = function (...pathParts) {
         buildedPath = join(buildedPath, part);
 
         ifNotExists(buildedPath, () => {
-            logger.debug(`Path ${buildedPath} not exists, creating new`);
-            create(buildedPath);
+            logger.debug(`Path ${buildedPath} not exists, though creating new`);
+            mkdirSync(buildedPath);
         });
     });
 
@@ -50,4 +26,4 @@ const createIfNotExist = function (...pathParts) {
 
 };
 
-module.exports = { createIfNotExist, getFilesInDir, readFileSync };
+module.exports = { createIfNotExist };
