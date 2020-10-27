@@ -1,7 +1,9 @@
 const cmd = require('./util/cmd');
+const logger = require('./util/logger');
+const normalizeUrl = require('normalize-url');
+
 const { createIfNotExist } = require('./util/dir');
 const { join } = require('path');
-const logger = require('./util/logger');
 
 const TESTSSL_FILE_PATH = join(__dirname, '..', 'lib', 'testssl', 'testssl.sh');
 
@@ -33,11 +35,7 @@ const _checkEndpoint = function (endpointUrl, { severity, jsonPath, htmlPath, lo
 exports.checkEndpoint = function (url, { severity, format }) {
     logger.info(`Running ssl endpoint check for '${url}'`);
 
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-        url = `https://${url}`;
-    }
-
-    const endpointUrl = new URL(url);
+    const endpointUrl = new URL(normalizeUrl(url));
     let testsslArgs = {};
 
     if (severity) {
