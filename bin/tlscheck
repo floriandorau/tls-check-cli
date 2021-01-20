@@ -54,5 +54,6 @@ require('yargs/yargs')(process.argv.slice(2))
     .wrap(200)
     .help('help')
     .example('$0 test https://google.com', 'Runs a tlscheck against https://google.com')
+    .demandCommand()
     .argv;
 
