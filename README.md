@@ -1,5 +1,7 @@
 # tls-check-cli
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=floriandorau_tls-check-cli&metric=alert_status)](https://sonarcloud.io/dashboard?id=floriandorau_tls-check-cli)
+
 Simple cli wrapper around [testssl](https://testssl.sh/).
 
 ## How to use
