@@ -1,6 +1,6 @@
 # tls-check-cli
 
-Simple cli wrapper aroung [testssl](https://testssl.sh/).
+Simple cli wrapper around [testssl](https://testssl.sh/).
 
 ## How to use
 
@@ -23,15 +23,15 @@ Beispiele:
   tlscheck test https://google.com   Runs a tlscheck against https://google.com
 ```
 
-### Install testssl prerequisite
+### Install `testssl` prerequisite
 
-In order to run `tlscheck` you need to have `testssl` installed locally. You can run `tlscheck check` to check if you can run a TLS test. Otherwise use `tlscheck install` to download latest `testssl` version to you local `tlscheck` insallation. After that you can run TLS test.
+In order to run `tlscheck` you need to have `testssl` installed locally. You can run `tlscheck check` to check if you can run a TLS test. Otherwise use `tlscheck install` to download latest `testssl` version to your local `tlscheck` installation. After that you can run TLS test.
 
 ### Test TLS config
 
 With `tlscheck test <url>` you can check the TLS configuration of the given url.
 
-Further options can be used like the following
+Further options can be used like the following:
 
 ```shell-script
 tlscheck test
