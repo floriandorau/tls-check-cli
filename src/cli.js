@@ -1,7 +1,7 @@
 const logger = require('./util/logger');
 
 const { resolve } = require('path');
-const { existsSync } = require('fs');
+const { existsSync, rmSync } = require('fs');
 const { exec } = require('./util/cmd');
 
 const { checkEndpoint } = require('./testssl');
@@ -33,6 +33,10 @@ const install = ({ verbose = false }) => {
     logger.init({ debug: verbose });
 
     try {
+        if (existsSync(TESTSSL_FILE_PATH)) {
+            logger.info('Removing former version of testssl.sh');
+            rmSync(TESTSSL_FILE_PATH, { recursive: true, maxRetries: 2 });
+        }
         logger.info('Cloning latest version of testssl.sh');
         exec('git', ['clone', 'https://github.com/drwetter/testssl.sh.git', TESTSSL_FILE_PATH]);
     } catch (err) {
