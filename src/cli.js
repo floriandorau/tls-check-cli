@@ -7,6 +7,7 @@ const { exec } = require('./util/cmd');
 const { checkEndpoint } = require('./testssl');
 
 const TESTSSL_FILE_PATH = resolve(__dirname, '..', 'lib', 'testssl');
+const TESTSSL_VERSION = '3.2';
 
 const test = (url, { severity, format, file, verbose }) => {
     logger.init({ debug: verbose });
@@ -37,8 +38,9 @@ const install = ({ verbose = false }) => {
             logger.info('Removing former version of testssl.sh');
             rmSync(TESTSSL_FILE_PATH, { recursive: true, maxRetries: 2 });
         }
-        logger.info('Cloning latest version of testssl.sh');
-        exec('git', ['clone', 'https://github.com/drwetter/testssl.sh.git', TESTSSL_FILE_PATH]);
+
+        logger.info(`Installing testssl.sh with version ${TESTSSL_VERSION} ...`);
+        exec('git', ['clone', '--depth', '1', 'https://github.com/testssl/testssl.sh.git', '--branch', TESTSSL_VERSION, TESTSSL_FILE_PATH]);
     } catch (err) {
         logger.error('error while installing testssl', err);
     }
